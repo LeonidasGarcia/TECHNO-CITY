@@ -1,4 +1,4 @@
-package AdministrarEmpleadosMVC;
+package dA_AdministrarEmpleados;
 
 /**
  *

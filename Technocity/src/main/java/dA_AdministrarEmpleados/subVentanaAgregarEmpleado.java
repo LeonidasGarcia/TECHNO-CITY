@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package AdministrarEmpleadosMVC;
+package dA_AdministrarEmpleados;
 
-import Conector_FireBase.ConectorFireBase;
 import java.awt.Color;
 import java.awt.Image;
-
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
@@ -21,29 +15,17 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author USUARIO
+ * @author Leonidas Garcia Lescano
  */
-public class subVentanaEmpleado extends javax.swing.JFrame {
+public class subVentanaAgregarEmpleado extends javax.swing.JFrame {
 
-    private String idEmpleado;
-    private VentanaAdministrarEmpleados ventanaPadre;
-
-    public subVentanaEmpleado(VentanaAdministrarEmpleados ventanaPadre, String[] dataRow) {
+    private AdministrarEmpleados objAdministrarEmpleados;
+    
+    public subVentanaAgregarEmpleado(VentanaAdministrarEmpleados ventanaPadre, AdministrarEmpleados objAdministrarEmpleados) {
         initComponents();
+        this.objAdministrarEmpleados = objAdministrarEmpleados;
         this.setResizable(false);
         setLocationRelativeTo(null);
-
-        this.idEmpleado = dataRow[0];
-        this.ventanaPadre = ventanaPadre;
-
-        labelID.setText("Datos del empleado " + dataRow[0]);
-
-        txtApellidos.setText(dataRow[1]);
-        txtNombres.setText(dataRow[2]);
-        cbCargo.setSelectedItem(dataRow[3]);
-        spinnerSueldo.setValue(Integer.parseInt(dataRow[4]));
-        txtNumeroCelular.setText(dataRow[5]);
-        txtCorreoElectronico.setText(dataRow[6].split("@")[0]);
 
         //Deteccion de ventana cerrada
         addWindowListener(new WindowAdapter() {
@@ -53,8 +35,7 @@ public class subVentanaEmpleado extends javax.swing.JFrame {
             }
         });
 
-        botonActualizarDatos.setIcon(setIcono("/iconos/actualizarEmpleado.png", botonActualizarDatos));
-        botonEliminarEmpleado.setIcon(setIcono("/iconos/eliminarEmpleado.jpg", botonEliminarEmpleado));
+        botonAgregarNuevoEmpleado.setIcon(setIcono("/iconos/agregarEmpleado.png", botonAgregarNuevoEmpleado));
 
     }
 
@@ -79,20 +60,18 @@ public class subVentanaEmpleado extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txtApellidos = new javax.swing.JTextField();
-        txtNombres = new javax.swing.JTextField();
-        txtCorreoElectronico = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        botonAgregarNuevoEmpleado = new javax.swing.JButton();
+        txtNombres = new javax.swing.JTextField();
         txtNumeroCelular = new javax.swing.JTextField();
-        botonActualizarDatos = new javax.swing.JButton();
-        botonEliminarEmpleado = new javax.swing.JButton();
+        txtCorreoElectronico = new javax.swing.JTextField();
+        txtApellidos = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        labelID = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         cbTipoCorreo = new javax.swing.JComboBox<>();
@@ -103,165 +82,134 @@ public class subVentanaEmpleado extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setMinimumSize(new java.awt.Dimension(550, 410));
+        jPanel1.setPreferredSize(new java.awt.Dimension(550, 410));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtApellidos.setBackground(new java.awt.Color(255, 255, 255));
-        txtApellidos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txtApellidos.setForeground(new java.awt.Color(0, 0, 0));
-        txtApellidos.setMargin(new java.awt.Insets(2, 7, 2, 7));
-        jPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 120, 24));
-
-        txtNombres.setBackground(new java.awt.Color(255, 255, 255));
-        txtNombres.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txtNombres.setForeground(new java.awt.Color(0, 0, 0));
-        txtNombres.setMargin(new java.awt.Insets(2, 7, 2, 7));
-        jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 120, 24));
-
-        txtCorreoElectronico.setBackground(new java.awt.Color(255, 255, 255));
-        txtCorreoElectronico.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txtCorreoElectronico.setForeground(new java.awt.Color(0, 0, 0));
-        txtCorreoElectronico.setMargin(new java.awt.Insets(2, 7, 2, 7));
-        jPanel1.add(txtCorreoElectronico, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 220, 210, 24));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Apellidos");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, 20));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 68, -1));
 
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombres");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 68, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Cargo");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
+        jLabel4.setText("Cargo:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, 68, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("E-mail");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+        jLabel5.setText("Sueldo");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 68, 20));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Teléfono");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, -1, -1));
+        jLabel6.setText("Número de celular");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("Sueldo");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, -1));
+        jLabel7.setText("E-mail");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
+
+        botonAgregarNuevoEmpleado.setBackground(new java.awt.Color(255, 255, 255));
+        botonAgregarNuevoEmpleado.setForeground(new java.awt.Color(255, 255, 255));
+        botonAgregarNuevoEmpleado.setBorder(null);
+        botonAgregarNuevoEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarNuevoEmpleadoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botonAgregarNuevoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 110, 110));
+
+        txtNombres.setBackground(new java.awt.Color(255, 255, 255));
+        txtNombres.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        txtNombres.setForeground(new java.awt.Color(0, 0, 0));
+        txtNombres.setMargin(new java.awt.Insets(2, 7, 2, 7));
+        jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 130, 30));
 
         txtNumeroCelular.setBackground(new java.awt.Color(255, 255, 255));
-        txtNumeroCelular.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtNumeroCelular.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         txtNumeroCelular.setForeground(new java.awt.Color(0, 0, 0));
         txtNumeroCelular.setMargin(new java.awt.Insets(2, 7, 2, 7));
-        jPanel1.add(txtNumeroCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 120, 24));
+        jPanel1.add(txtNumeroCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 130, 30));
 
-        botonActualizarDatos.setBackground(new java.awt.Color(255, 255, 255));
-        botonActualizarDatos.setBorder(null);
-        botonActualizarDatos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonActualizarDatosActionPerformed(evt);
-            }
-        });
-        jPanel1.add(botonActualizarDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 100, 100));
+        txtCorreoElectronico.setBackground(new java.awt.Color(255, 255, 255));
+        txtCorreoElectronico.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        txtCorreoElectronico.setForeground(new java.awt.Color(0, 0, 0));
+        txtCorreoElectronico.setMargin(new java.awt.Insets(2, 7, 2, 7));
+        jPanel1.add(txtCorreoElectronico, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 190, 30));
 
-        botonEliminarEmpleado.setBackground(new java.awt.Color(255, 255, 255));
-        botonEliminarEmpleado.setBorder(null);
-        botonEliminarEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonEliminarEmpleadoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(botonEliminarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 270, 100, 100));
+        txtApellidos.setBackground(new java.awt.Color(255, 255, 255));
+        txtApellidos.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        txtApellidos.setForeground(new java.awt.Color(0, 0, 0));
+        txtApellidos.setMargin(new java.awt.Insets(2, 7, 2, 7));
+        jPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 130, 30));
 
         jPanel2.setBackground(new java.awt.Color(255, 153, 51));
+        jPanel2.setForeground(new java.awt.Color(255, 153, 51));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        labelID.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        labelID.setForeground(new java.awt.Color(255, 255, 255));
-        labelID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelID.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Agregar nuevo empleado");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addComponent(labelID, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(labelID, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 80));
-
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setText("Eliminar empleado");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 370, -1, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 60));
 
         jLabel8.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel8.setText("Actualizar datos");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, -1, -1));
+        jLabel8.setText("Agregar nuevo empleado");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 370, -1, -1));
 
         cbTipoCorreo.setBackground(new java.awt.Color(255, 255, 255));
         cbTipoCorreo.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         cbTipoCorreo.setForeground(new java.awt.Color(0, 0, 0));
         cbTipoCorreo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "@gmail.com", "@hotmail.com", "@outlook.com" }));
-        jPanel1.add(cbTipoCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 220, 120, 24));
+        jPanel1.add(cbTipoCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 120, 30));
 
         cbCargo.setBackground(new java.awt.Color(255, 255, 255));
         cbCargo.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         cbCargo.setForeground(new java.awt.Color(0, 0, 0));
         cbCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cargo 1", "Cargo 2", "Cargo 3", "Cargo 4" }));
-        jPanel1.add(cbCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 120, 24));
+        jPanel1.add(cbCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 130, 30));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("S/.");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 24, 24));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 24, 24));
 
         spinnerSueldo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        spinnerSueldo.setModel(new javax.swing.SpinnerNumberModel(0, null, null, 100));
-        spinnerSueldo.setToolTipText("");
-        jPanel1.add(spinnerSueldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, 100, 24));
+        spinnerSueldo.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 100));
+        jPanel1.add(spinnerSueldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, 110, 24));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 458, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarEmpleadoActionPerformed
-        eliminarEmpleado();
-        ventanaPadre.ventanaCerrada();
-        ventanaPadre.ventanaCerrada();
-        this.dispose();
-    }//GEN-LAST:event_botonEliminarEmpleadoActionPerformed
-
-    private void botonActualizarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarDatosActionPerformed
-        actualizarEmpleado();
-    }//GEN-LAST:event_botonActualizarDatosActionPerformed
-
+    private void botonAgregarNuevoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarNuevoEmpleadoActionPerformed
+        agregarNuevoEmpleado();
+    }//GEN-LAST:event_botonAgregarNuevoEmpleadoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonActualizarDatos;
-    private javax.swing.JButton botonEliminarEmpleado;
+    private javax.swing.JButton botonAgregarNuevoEmpleado;
     private javax.swing.JComboBox<String> cbCargo;
     private javax.swing.JComboBox<String> cbTipoCorreo;
     private javax.swing.JLabel jLabel1;
@@ -275,7 +223,6 @@ public class subVentanaEmpleado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel labelID;
     private javax.swing.JSpinner spinnerSueldo;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtCorreoElectronico;
@@ -283,14 +230,13 @@ public class subVentanaEmpleado extends javax.swing.JFrame {
     private javax.swing.JTextField txtNumeroCelular;
     // End of variables declaration//GEN-END:variables
 
-    private void eliminarEmpleado() {
-        ConectorFireBase.eliminarEmpleado("Empleados", idEmpleado);
-    }
+    private void agregarNuevoEmpleado() {
 
-    private void actualizarEmpleado() {
+        String id = String.valueOf((int) Math.floor(Math.random() * 100000));
+
         Map<String, Object> datos = new HashMap<>();
 
-        //VALIDACION DE DATOS
+        //AQUI DEBE ESTAR LA VALIDACION
         int errores = 0;
         errores += validacionTxtNormales(txtNombres);
         errores += validacionTxtNormales(txtApellidos);
@@ -307,8 +253,12 @@ public class subVentanaEmpleado extends javax.swing.JFrame {
             datos.put("numero_celular", txtNumeroCelular.getText().trim());
             datos.put("correo_electronico", txtCorreoElectronico.getText().trim() + cbTipoCorreo.getSelectedItem().toString().trim());
 
-            //ENVIA LOS DATOS A LA BASE DE DATOS
-            ConectorFireBase.actualizarEmpleado("Empleados", idEmpleado, datos);
+            //ENVIA LOS DATOS
+            objAdministrarEmpleados.guardarEmpleado("Empleados", id, datos);
+
+            JOptionPane.showMessageDialog(null, "Empleado agregado correctamente");
+
+            reiniciarCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Uno o mas datos ingresados son incorrectos, revíselo y reintente nuevamente");
             reiniciarFondos();
@@ -357,10 +307,11 @@ public class subVentanaEmpleado extends javax.swing.JFrame {
         cbCargo.setSelectedIndex(0);
     }
 
-    private void reiniciarFondos() {
+    private void reiniciarFondos () {
         txtNombres.setBackground(Color.white);
         txtApellidos.setBackground(Color.white);
         txtNumeroCelular.setBackground(Color.white);
         txtCorreoElectronico.setBackground(Color.white);
     }
+    
 }

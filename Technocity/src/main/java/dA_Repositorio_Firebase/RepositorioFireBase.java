@@ -1,4 +1,4 @@
-package Conector_FireBase;
+package dA_Repositorio_Firebase;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -16,21 +16,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author LEONIDAS GARCIA LESCANO
  */
-public class ConectorFireBase {
+public class RepositorioFireBase {
 
-    public static Firestore db;
+    private Firestore db;
 
     //CONEXION INICIAL CON FIRESTORE DATABASE
-    public static void conectar() {
+    public void conectar() {
 
         try {
             FileInputStream credenciales = new FileInputStream("credencialesFireBase.json");
@@ -50,26 +47,8 @@ public class ConectorFireBase {
 
     }
 
-    public static void main(String[] args) {
-        conectar();
-    }
-
     //RELLENA LOS DATOS DE LA TABLA DE EMPLEADOS
-    public static void cargarTablaEmpleados(JTable table) {
-
-        DefaultTableModel model = new DefaultTableModel() {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        model.addColumn("ID EMPLEADO");
-        model.addColumn("APELLIDOS");
-        model.addColumn("NOMBRES");
-        model.addColumn("CARGO");
-        model.addColumn("SUELDO");
-        model.addColumn("TELEFONO");
-        model.addColumn("E-MAIL");
+    public void cargarEmpleados(DefaultTableModel model) {
 
         try {
 
@@ -87,32 +66,13 @@ public class ConectorFireBase {
                     docSnap.getString("correo_electronico")
                 });
             }
-
-            for (int i = 0; i < model.getRowCount(); i++) {
-                for (int j = 0; j < model.getColumnCount(); j++) {
-                    model.isCellEditable(i, j);
-                }
-            }
-
-            table.setModel(model);
-
-            table.getTableHeader().setReorderingAllowed(false);
-            table.getColumnModel().getColumn(6).setMinWidth(200);
-
-            //Centrar texto en las celdas de la tabla
-            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-            centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-
-            for (int i = 0; i < table.getColumnCount(); i++) {
-                table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-            }
-
+            
         } catch (InterruptedException | ExecutionException e) {
             System.err.println("ERROR");
         }
     }
 
-    public static boolean guardarEmpleado(String coleccion, String documento, Map<String, Object> data) {
+    public boolean guardarEmpleado(String coleccion, String documento, Map<String, Object> data) {
 
         db = FirestoreClient.getFirestore();
 
@@ -128,7 +88,7 @@ public class ConectorFireBase {
         }
     }
 
-    public static boolean eliminarEmpleado(String coleccion, String documento) {
+    public boolean eliminarEmpleado(String coleccion, String documento) {
 
         db = FirestoreClient.getFirestore();
 
@@ -144,7 +104,7 @@ public class ConectorFireBase {
         }
     }
 
-    public static boolean actualizarEmpleado(String coleccion, String documento, Map<String, Object> data) {
+    public boolean actualizarEmpleado(String coleccion, String documento, Map<String, Object> data) {
 
         db = FirestoreClient.getFirestore();
 
